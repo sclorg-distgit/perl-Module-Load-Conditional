@@ -1,8 +1,8 @@
 %{?scl:%scl_package perl-Module-Load-Conditional}
 
 Name:           %{?scl_prefix}perl-Module-Load-Conditional
-Version:        0.68
-Release:        1%{?dist}
+Version:        0.64
+Release:        366%{?dist}
 Summary:        Looking up module information and loading at run-time
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,9 +10,6 @@ URL:            http://search.cpan.org/dist/Module-Load-Conditional/
 Source0:        http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-%{version}.tar.gz
 BuildArch:      noarch
 # Build:
-BuildRequires:  coreutils
-BuildRequires:  findutils
-BuildRequires:  make
 BuildRequires:  %{?scl_prefix}perl
 BuildRequires:  %{?scl_prefix}perl-generators
 BuildRequires:  %{?scl_prefix}perl(ExtUtils::MakeMaker)
@@ -69,8 +66,8 @@ you have installed on your system during run-time.
 
 %install
 %{?scl:scl enable %{scl} '}make pure_install DESTDIR=$RPM_BUILD_ROOT%{?scl:'}
-find %{buildroot} -type f -name .packlist -delete
-%{_fixperms} %{buildroot}
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+%{_fixperms} $RPM_BUILD_ROOT
 
 %check
 %{?scl:scl enable %{scl} '}make test%{?scl:'}
@@ -81,16 +78,6 @@ find %{buildroot} -type f -name .packlist -delete
 %{_mandir}/man3/Module::Load::Conditional.3*
 
 %changelog
-* Fri Jul 29 2016 Paul Howarth <paul@city-fan.org> - 0.68-1
-- Update to 0.68
-  - Fix unconditional @INC localization
-
-* Wed Jul 27 2016 Paul Howarth <paul@city-fan.org> - 0.66-1
-- Update to 0.66
-  - Add FORCE_SAFE_INC option to address CVE-2016-1238
-- BR: perl-generators
-- Simplify find command using -delete
-
 * Mon Jul 11 2016 Petr Pisar <ppisar@redhat.com> - 0.64-366
 - SCL
 
